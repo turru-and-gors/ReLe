@@ -1,18 +1,19 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿
 using UnityEngine;
 
+/*! \brief Extension of Car class, for training purposes.
+ */
 public class TrainingCar : Car
 {
-    public float minSteerFactor = -1;
-    public float maxSteerFactor = 1;
+    public float minSteerFactor = -1;   /*!< The steer factor minimum possible value */
+    public float maxSteerFactor = 1;    /*!< The steer factor maximum possible value */
 
-    private float m;    // Slope for conversion between float and uint
-    private readonly int numBytes = 2;
-    private uint maxUint;
-    private float probMutation = 0.1f;
-    private bool running = true;
-    private float reward;
+    private float m;        /*!< Slope for conversion between float and uint */
+    private readonly int numBytes = 2;  /*!< Number of bytes to represent the steer factor */
+    private uint maxUint;               /*!< Maximum value of representation for steer factor */
+    private float probMutation = 0.1f;  /*!< Probability of mutation for the new agent */
+    private bool running = true;        /*!< Is the car still enabled */
+    private float reward;               /*!< Reward value (cummulative) */
 
     // =====> PUBLIC FUNCTIONS
     public void SetEnabled(bool enabled)
@@ -38,13 +39,11 @@ public class TrainingCar : Car
     public void ResetReward()
     {
         this.reward = 0;
-    }
+    }    
 
-    public float GetSteeringFactor()
-    {
-        return steerFactor;
-    }
-
+    /*! \brief Create a new agent by combining this car and another one.
+     * \param other Other parent of the new agent.
+     */
     public float GenerateNewAgent(ref TrainingCar other)
     {
         return Crossover(other.steerFactor);
